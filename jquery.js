@@ -1,25 +1,30 @@
-$(function () {
-  $("#playlist li").on("click", function () {
-    $("#videoarea").attr({
-      src: $(this).attr("movieurl"),
-      poster: "",
-      autoplay: "autoplay",
-    });
-  });
-  $("#videoarea").attr({
-    src: $("#playlist li").eq(0).attr("movieurl"),
-    poster: $("#playlist li").eq(0).attr("moviesposter"),
-  });
+$("#tabs-nav li:first-child").addClass("active");
+$(".tab-content").hide();
+$(".tab-content:first").show();
+
+// Click function
+$("#tabs-nav li").click(function () {
+  $("#tabs-nav li").removeClass("active");
+  $(this).addClass("active");
+  $(".tab-content").hide();
+
+  var activeTab = $(this).find("a").attr("href");
+  $(activeTab).fadeIn();
+  return false;
 });
 
-$(".show-video")
+$(".video")
   .parent()
   .click(function () {
-    if ($(this).children(".show-video").get(0).paused) {
-      $(this).children(".show-video").get(0).play();
-      $(this).children(".play-video").fadeOut();
+    if ($(this).children(".video").get(0).paused) {
+      $(this).children(".video").get(0).play();
+      $(this).children(".playpause").fadeOut();
     } else {
-      $(this).children(".show-video").get(0).pause();
-      $(this).children(".play-video").fadeIn();
+      $(this).children(".video").get(0).pause();
+      $(this).children(".playpause").fadeIn();
     }
   });
+
+$("#tabs-nav li").click(function (e) {
+  $("video").trigger("pause");
+});
